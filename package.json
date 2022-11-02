@@ -1,0 +1,11 @@
+{
+  "name": "react-f2b-section17-18",
+  "version": "1.0.0",
+  "description": "Support desk app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Yi",
+  "license": "ISC"
+}
