@@ -10,7 +10,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // Validation rules whether they have submitted a request with the required parameters.
     if(!name || !email || !password){
-        res.status(400).json({
+        return res.status(400).json({
             error: 'All parameters must be entered.'
         })
     } 
@@ -49,7 +49,37 @@ const registerUser = asyncHandler(async (req, res) => {
 
 
 const loginUser = async (req, res) => {
-    res.send('Login user.')
+    const { email, password } = req.body;
+
+    // Validate if user has entered all parameters.
+    if(!email || !password){
+        return res.status(400).json({
+            error: 'All parameters must be entered.'
+        })
+    }
+
+    try {
+        // Make a query to DB and check if user exist.
+        const foundUser = await User.findOne({ email });
+        if(!foundUser){
+            return res.status(400).json({
+                error: 'User does not exist.'
+            })
+        }
+
+        // Check password is correct.
+        if(foundUser && await bcrypt.compare(password, foundUser.password)){
+            return res.status(200).json(foundUser)
+        }
+        
+
+
+    } catch (error) {
+        return res.status(400).json({
+            error: 'Invalid user credentials.'
+        })
+    }   
+
 }
 
 
