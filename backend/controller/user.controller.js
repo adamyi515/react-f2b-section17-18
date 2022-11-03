@@ -72,7 +72,10 @@ const loginUser = async (req, res) => {
             return res.status(200).json(foundUser)
         }
         
-
+        // If password does not match, then do this.
+        return res.status(401).json({
+            error: 'Password does not match'
+        })
 
     } catch (error) {
         return res.status(400).json({
